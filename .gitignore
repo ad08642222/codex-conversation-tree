@@ -1,0 +1,6 @@
+runtime/
+CodexProfile/
+*.log
+.DS_Store
+Thumbs.db
+

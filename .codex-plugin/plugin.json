@@ -1,0 +1,23 @@
+{
+  "name": "codex-conversation-tree",
+  "version": "1.0.0",
+  "description": "Open and inspect the local infinite-branch Codex conversation tree on Windows.",
+  "author": {
+    "name": "Codex Conversation Tree contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Conversation Tree",
+    "shortDescription": "View real Codex thread lineage inside Codex.",
+    "longDescription": "Opens a dedicated Windows Codex window with an embedded, read-only tree built from real forked_from_id relationships.",
+    "developerName": "Codex Conversation Tree contributors",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Local"],
+    "defaultPrompt": [
+      "Open the Codex Conversation Tree.",
+      "Check the Conversation Tree status.",
+      "Explain how Codex thread branches are displayed."
+    ],
+    "brandColor": "#FF7A45"
+  }
+}

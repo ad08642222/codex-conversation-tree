@@ -1,0 +1,16 @@
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  syntax:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --check app/server.js
+      - run: node --check app/inject.js
+      - run: node --check app/embedded-launcher.js
+
