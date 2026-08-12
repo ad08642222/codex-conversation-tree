@@ -35,6 +35,14 @@ Codex plugins do not currently expose a public sidebar UI extension point. This 
 
 See the [Chinese README](README.md) for the full comparison, architecture, security notes, usage, and troubleshooting.
 
+## Support and feedback
+
+- Questions and setup help: [GitHub Discussions](https://github.com/ad08642222/codex-conversation-tree/discussions)
+- Reproducible bugs: [open an Issue](https://github.com/ad08642222/codex-conversation-tree/issues/new/choose)
+- Feature requests: use the **Ideas** discussion category
+
+Remove usernames, local paths, thread titles, thread IDs, and tokens from screenshots or logs before posting.
+
 ## License
 
 [MIT](LICENSE)

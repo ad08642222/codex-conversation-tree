@@ -104,6 +104,14 @@ node --check app/embedded-launcher.js
 
 欢迎提交 Issue 和 Pull Request。开发说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，版本记录见 [CHANGELOG.md](CHANGELOG.md)。
 
+## 反馈与交流
+
+- 安装和使用咨询：[GitHub Discussions](https://github.com/ad08642222/codex-conversation-tree/discussions)
+- 可复现的软件错误：[提交 Issue](https://github.com/ad08642222/codex-conversation-tree/issues/new/choose)
+- 新功能建议：在 Discussions 的 **Ideas** 分类提出
+
+上传截图或日志前，请隐藏用户名、本机路径、会话标题、会话 ID 和 Token。
+
 ## License
 
 [MIT](LICENSE)
