@@ -1,15 +1,15 @@
 {
   "name": "codex-conversation-tree",
   "version": "1.1.0",
-  "description": "Open and inspect the local infinite-branch Codex conversation tree on Windows.",
+  "description": "Embed a local, read-only conversation tree in the official Codex window on Windows.",
   "author": {
     "name": "Codex Conversation Tree contributors"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Codex Conversation Tree",
-    "shortDescription": "View real Codex thread lineage inside Codex.",
-    "longDescription": "Adds an embedded, read-only lineage tree to the user's existing official Codex profile without creating a second conversation store.",
+    "shortDescription": "View real task lineage in the official Codex window.",
+    "longDescription": "Adds a local, read-only conversation tree to the user's existing official Codex window, keeps manual thread names in sync, and never creates a second conversation store.",
     "developerName": "Codex Conversation Tree contributors",
     "category": "Productivity",
     "capabilities": ["Interactive", "Local"],
