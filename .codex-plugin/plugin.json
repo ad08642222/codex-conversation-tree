@@ -1,6 +1,6 @@
 {
   "name": "codex-conversation-tree",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Embed a local, read-only conversation tree in the official Codex window on Windows.",
   "author": {
     "name": "Codex Conversation Tree contributors"

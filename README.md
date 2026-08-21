@@ -2,18 +2,18 @@
 
 [![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)](#系统要求)
 [![Local first](https://img.shields.io/badge/data-local--only-2ea44f)](#隐私与安全)
-[![Release](https://img.shields.io/badge/release-v1.1.0-ff7a45)](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0)
+[![Release](https://img.shields.io/badge/release-v1.1.1-ff7a45)](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.1)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f97316.svg)](LICENSE)
 
 把 Codex 的真实任务分支直接放进官方 Windows 客户端：左侧栏一键进入，在主工作区查看、搜索并打开无限分叉的会话树。
 
-> **v1.1.0：真正使用同一个官方 Codex 窗口。** 不再启动第二个客户端或创建第二套会话数据；继续使用原来的登录状态和任务列表，手动重命名约 5 秒同步，并可一键恢复普通官方启动方式。
+> **v1.1.1：真正使用同一个官方 Codex 窗口。** 不再启动第二个客户端或创建第二套会话数据；继续使用原来的登录状态和任务列表，手动重命名约 5 秒同步，内容区重建后自动恢复，并可一键回退普通官方启动方式。
 
 > 非 OpenAI 官方项目。目前 Codex 插件没有公开的侧边栏 UI 扩展接口，所以项目通过本机 CDP 桥接实现侧边栏按钮和内嵌页面。
 
 ![安装前后的使用体验对比](assets/posters/v1.1.0-before-after.png)
 
-[English](README.en.md) · [下载 v1.1.0](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0) · [安装](#安装只需三步) · [安全与回退](#为什么启动时需要重启一次-codex)
+[English](README.en.md) · [下载 v1.1.1](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.1) · [安装](#安装只需三步) · [安全与回退](#为什么启动时需要重启一次-codex)
 
 ## 没有会话树时，哪里不方便？
 
@@ -45,6 +45,7 @@ Codex 原来的任务列表适合打开最近任务，但当任务越来越多�
 - 点击节点直接打开对应 Codex 任务。
 - 手动重命名任务后，节点名称会在约 5 秒内同步；搜索仍同时匹配原始标题。
 - 提供 **Restore Official Codex**，随时停止注入并恢复普通官方启动方式。
+- Codex 重建主内容区后自动识别新的 Chromium frame 并重新加载，避免空白黑屏。
 - 只读运行，不修改任务内容；所有数据留在本机。
 - 修复拖动画布后鼠标“黏住”的问题，并处理窗口失焦、指针取消等边界情况。
 
@@ -54,7 +55,7 @@ Codex 原来的任务列表适合打开最近任务，但当任务越来越多�
 
 ## 安装：只需三步
 
-1. 从 [v1.1.0 Release](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0) 下载 `codex-conversation-tree-v1.1.0.zip`。
+1. 从 [v1.1.1 Release](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.1) 下载 `codex-conversation-tree-v1.1.1.zip`。
 2. 解压后双击 **`install.cmd`**。
 3. 使用桌面的 **Codex Conversation Tree** 快捷方式启动；如果 Codex 已经运行，会正常重启一次并继续使用原来的官方配置和会话。
 

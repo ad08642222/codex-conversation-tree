@@ -198,7 +198,9 @@ async function loadFrames(target) {
     await cdp.send('Page.setBypassCSP', { enabled: true });
     const { frameTree } = await cdp.send('Page.getFrameTree');
     for (const frame of findTreeFrames(frameTree)) {
-      const key = `${target.id}:${frame.name}`;
+      // Chromium assigns a new frame id when Codex rebuilds the content area,
+      // even if the existing iframe element keeps the same name.
+      const key = `${target.id}:${frame.id}`;
       if (loadedFrames.has(key)) continue;
       await cdp.send('Page.setDocumentContent', { frameId: frame.id, html: await treeDocument() });
       loadedFrames.add(key);

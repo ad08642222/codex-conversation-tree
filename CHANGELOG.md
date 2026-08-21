@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Reload the embedded tree after Codex recreates its Chromium frame, preventing a blank black page after main-workspace remounts.
+
 ## 1.1.0
 
 - Replaced the isolated `CodexProfile` window with the user's existing official Codex profile.

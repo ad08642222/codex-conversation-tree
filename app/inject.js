@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const VERSION = '1.1.0-main-profile';
+  const VERSION = '1.1.1-main-profile';
   const SENTINEL = '__codexConversationTreeInjection__';
   const ENTRY_ID = 'codex-conversation-tree-entry';
   const PAGE_ID = 'codex-conversation-tree-page';

@@ -2,13 +2,13 @@
 
 Real Codex task lineage inside the official Windows app: open an infinite conversation tree from the sidebar, inspect branches in the main workspace, and jump back to any native task.
 
-> **Version 1.1.0 uses your existing official Codex window.** There is no second client or separate conversation store. Your login and task list stay the same, manual renames sync in about five seconds, and one shortcut restores the normal official launch path.
+> **Version 1.1.1 uses your existing official Codex window.** There is no second client or separate conversation store. Your login and task list stay the same, manual renames sync in about five seconds, rebuilt content frames recover automatically, and one shortcut restores the normal official launch path.
 
 ![Codex Conversation Tree](assets/screenshots/tree-overview.png)
 
 This is an unofficial, local-first community project. It reads real `forked_from_id` relationships without modifying task data, adds a **Conversation Tree** entry below **Plugins**, and opens tasks in Codex when you click a node.
 
-[Download v1.1.0](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0) · [Chinese README](README.md) · [Security](SECURITY.md)
+[Download v1.1.1](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.1) · [Chinese README](README.md) · [Security](SECURITY.md)
 
 ## The problem it solves
 
@@ -25,7 +25,7 @@ Codex's normal task list is convenient for recent work, but it does not provide 
 
 ## Install
 
-1. Download and extract `codex-conversation-tree-v1.1.0.zip` from the [latest release](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0).
+1. Download and extract `codex-conversation-tree-v1.1.1.zip` from the [latest release](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.1).
 2. Double-click `install.cmd`.
 3. Launch **Codex Conversation Tree** from the desktop. If Codex is already open, it restarts once and keeps the same official profile and conversations.
 
@@ -40,6 +40,7 @@ No administrator rights or npm install are required. The installer downloads the
 - Native task navigation
 - Manual thread-name sync within about five seconds, while search still matches the original generated title
 - One-click **Restore Official Codex** rollback
+- Automatic recovery when Codex rebuilds the embedded Chromium frame
 - Local-only, read-only data access
 - Optional Skill for opening the tree by natural language
 
