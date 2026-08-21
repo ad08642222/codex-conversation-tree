@@ -8,6 +8,8 @@ Get-CimInstance Win32_Process | Where-Object {
 
 $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Codex Conversation Tree.lnk'
 if (Test-Path -LiteralPath $desktopShortcut) { Remove-Item -LiteralPath $desktopShortcut -Force }
+$restoreShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Restore Official Codex.lnk'
+if (Test-Path -LiteralPath $restoreShortcut) { Remove-Item -LiteralPath $restoreShortcut -Force }
 if (Test-Path -LiteralPath $installDir) { Remove-Item -LiteralPath $installDir -Recurse -Force }
 
 if (-not $KeepPlugin) {
@@ -21,4 +23,3 @@ if (-not $KeepPlugin) {
   }
 }
 Write-Host 'Codex Conversation Tree was removed.' -ForegroundColor Green
-

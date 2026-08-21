@@ -10,6 +10,7 @@ const PORT = Number(process.env.CODEX_TREE_PORT || 47831);
 const CODEX_HOME = process.env.CODEX_HOME || path.join(os.homedir(), '.codex');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const DB_PATH = path.join(CODEX_HOME, 'state_5.sqlite');
+const OWNER_PID = Number(process.env.CODEX_TREE_OWNER_PID || 0);
 
 let cachedTree = null;
 let cachedAt = 0;
@@ -55,8 +56,10 @@ function readDatabase() {
   if (!fs.existsSync(DB_PATH)) return { threads, spawnEdges };
   const db = new DatabaseSync(DB_PATH, { readOnly: true });
   try {
+    const threadColumns = new Set(db.prepare('PRAGMA table_info(threads)').all().map((column) => column.name));
+    const nameColumn = threadColumns.has('name') ? 'name' : 'NULL AS name';
     const rows = db.prepare(`
-      SELECT id, title, created_at, updated_at, archived, cwd, source,
+      SELECT id, ${nameColumn}, title, created_at, updated_at, archived, cwd, source,
              first_user_message, preview, is_pinned, thread_source
       FROM threads
     `).all();
@@ -94,12 +97,16 @@ function buildTreeData() {
   for (const id of ids) {
     const row = threads.get(id) || {};
     const meta = metas.get(id) || {};
-    const title = String(row.title || row.first_user_message || '未命名会话').replace(/\s+/g, ' ').trim();
+    const customName = String(row.name || '').replace(/\s+/g, ' ').trim();
+    const originalTitle = String(row.title || row.first_user_message || '').replace(/\s+/g, ' ').trim();
+    const title = customName || originalTitle || '未命名会话';
     nodes.push({
       id,
       parentId: meta.parentId && ids.has(meta.parentId) ? meta.parentId : null,
       missingParentId: meta.parentId && !ids.has(meta.parentId) ? meta.parentId : null,
       title: title || '未命名会话',
+      customName: customName || null,
+      originalTitle: originalTitle || null,
       createdAt: Number(row.created_at || 0) * 1000,
       updatedAt: Number(row.updated_at || 0) * 1000,
       archived: Boolean(row.archived),
@@ -161,7 +168,9 @@ const server = http.createServer((req, res) => {
     try { return sendJson(res, 200, getTreeData(url.searchParams.get('refresh') === '1')); }
     catch (error) { return sendJson(res, 500, { error: error.message }); }
   }
-  if (req.method === 'GET' && url.pathname === '/api/health') return sendJson(res, 200, { ok: true });
+  if (req.method === 'GET' && url.pathname === '/api/health') {
+    return sendJson(res, 200, { ok: true, mode: 'read-only', codexHome: CODEX_HOME, database: DB_PATH });
+  }
   if (req.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
     return serveFile(res, path.join(PUBLIC_DIR, 'index.html'), 'text/html; charset=utf-8');
   }
@@ -184,3 +193,15 @@ server.listen(PORT, HOST, () => {
     setTimeout(() => execFile('cmd.exe', ['/c', 'start', '', address], { windowsHide: true }), 250);
   }
 });
+
+if (OWNER_PID > 0) {
+  const ownerWatch = setInterval(() => {
+    try {
+      process.kill(OWNER_PID, 0);
+    } catch {
+      clearInterval(ownerWatch);
+      server.close(() => process.exit(0));
+    }
+  }, 2000);
+  ownerWatch.unref();
+}

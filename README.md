@@ -18,6 +18,7 @@
 - 在左侧 **Plugins** 下方显示 **Conversation Tree** 按钮。
 - 在对话区域显示可缩放、拖动、折叠、搜索的无限树状视图。
 - 点击节点直接打开对应 Codex 任务。
+- 手动重命名任务后，节点名称会在约 5 秒内同步；搜索仍同时匹配原始标题。
 - 只读运行，不修改任务内容；所有数据留在本机。
 - 修复拖动画布后鼠标“黏住”的问题，并处理窗口失焦、指针取消等边界情况。
 
@@ -27,9 +28,9 @@
 
 1. 在 GitHub 页面点击 **Code → Download ZIP**。
 2. 解压后双击 **`install.cmd`**。
-3. 使用桌面的 **Codex Conversation Tree** 快捷方式启动；首次打开独立 Codex 窗口时，按提示登录一次。
+3. 使用桌面的 **Codex Conversation Tree** 快捷方式启动；如果 Codex 已经运行，会正常重启一次并继续使用原来的官方配置和会话。
 
-安装器会把程序放到 `%LOCALAPPDATA%\CodexConversationTree`，从 Node.js 官网下载并校验便携运行时，同时注册可选的 Codex Skill。无需安装 npm 依赖，也无需管理员权限。
+安装器会把程序放到 `%LOCALAPPDATA%\CodexConversationTree`，从 Node.js 官网下载并校验便携运行时，同时注册可选的 Codex Skill。不会建立第二个 CodexProfile，无需安装 npm 依赖，也无需管理员权限。
 
 如果 Windows 阻止脚本，可在仓库目录运行：
 
@@ -41,7 +42,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
 ## 怎么使用
 
-1. 从桌面快捷方式启动专用 Codex 窗口。
+1. 从桌面快捷方式启动带会话树的官方 Codex 主窗口。
 2. 点击左侧 **Conversation Tree**。
 3. 滚轮缩放，拖动空白处平移；拖动节点调整布局。
 4. 点击节点标题打开任务；用搜索框快速定位任务。
@@ -54,14 +55,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 flowchart LR
   A["Codex 本地会话"] -->|"只读解析"| B["本地树服务"]
   B --> C["树状页面"]
-  D["专用 Codex 窗口"] -->|"本机 CDP 注入"| E["侧边栏按钮"]
+  D["官方 Codex 主窗口"] -->|"本机 CDP 注入"| E["侧边栏按钮"]
   E --> C
   F["可选 Skill"] -->|"打开"| D
 ```
 
-## 为什么不是普通的“一键装插件”？
+## 为什么启动时需要重启一次 Codex？
 
-Codex 插件可以提供 Skills、MCP、Apps 等能力，但目前没有公开的接口允许第三方直接向桌面端侧边栏添加按钮。因此，“安装器 + 专用 Codex 窗口”是当前最简单、又不会干扰普通 Codex 窗口的方案。代价是：Codex 更新后，界面选择器可能需要跟随调整；专用窗口首次使用可能需要单独登录。
+Codex 插件可以提供 Skills、MCP、Apps 等能力，但目前没有公开的接口允许第三方直接向桌面端侧边栏添加按钮。因此，本项目必须在官方 Codex 启动时增加仅限本机的 CDP 参数，再动态插入侧边栏入口。它使用原来的官方配置和会话，不需要第二次登录，也不会形成两套不同步的任务列表。代价是 Codex 更新后，界面选择器可能需要跟随调整。
+
+需要暂时关闭注入时，使用桌面的 **Restore Official Codex**；它会停止本项目的两个本地辅助进程，并从 Windows 官方应用入口重新启动 Codex。项目不修改 `app.asar`，因此可以随时回退。
+
+从 1.0.0 升级时直接重新运行 `install.cmd` 即可。旧安装目录中的 `CodexProfile` 不再使用；如需彻底清理，可先卸载旧版再安装新版。
 
 ## GitHub 上有没有类似项目？
 
@@ -86,9 +91,9 @@ OpenAI Codex 仓库中也有[树状会话管理的功能建议](https://github.c
 ## 隐私与安全
 
 - 树数据只从本机 Codex 会话目录读取，不上传到第三方服务。
-- 本地服务默认只监听 `127.0.0.1:47831`。
+- 本地服务默认只监听 `127.0.0.1:47831`，CDP 只监听 `127.0.0.1:9239`。
 - 查看器为只读；打开节点只会导航到相应 Codex 任务。
-- 专用 Codex 窗口启用本机调试端口以完成界面注入。不要把端口暴露到局域网或公网。
+- 官方 Codex 主窗口启用本机调试端口以完成界面注入。不要把端口暴露到局域网或公网。
 
 详见 [SECURITY.md](SECURITY.md)。
 
@@ -100,6 +105,7 @@ OpenAI Codex 仓库中也有[树状会话管理的功能建议](https://github.c
 node --check app/server.js
 node --check app/inject.js
 node --check app/embedded-launcher.js
+node --check app/restore-official.js
 ```
 
 欢迎提交 Issue 和 Pull Request。开发说明见 [CONTRIBUTING.md](CONTRIBUTING.md)，版本记录见 [CHANGELOG.md](CHANGELOG.md)。

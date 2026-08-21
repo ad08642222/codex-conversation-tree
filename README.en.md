@@ -10,7 +10,7 @@ This is an unofficial community project. It reads real `forked_from_id` relation
 
 1. Download and extract the repository ZIP.
 2. Double-click `install.cmd`.
-3. Launch **Codex Conversation Tree** from the desktop. The dedicated Codex window may ask you to sign in once.
+3. Launch **Codex Conversation Tree** from the desktop. If Codex is already open, it restarts once and keeps the same official profile and conversations.
 
 No administrator rights or npm install are required. The installer downloads the official portable Node.js runtime, verifies its SHA-256 checksum, and installs to `%LOCALAPPDATA%\CodexConversationTree`.
 
@@ -20,12 +20,15 @@ No administrator rights or npm install are required. The installer downloads the
 - Infinite pan, zoom, search, collapse, and node layout
 - Sidebar entry and embedded main-workspace viewer
 - Native task navigation
+- Manual thread-name sync within about five seconds, while search still matches the original generated title
 - Local-only, read-only data access
 - Optional Skill for opening the tree by natural language
 
-## Why a dedicated Codex window?
+## Why does Codex restart once?
 
-Codex plugins do not currently expose a public sidebar UI extension point. This project therefore uses a local CDP bridge in an isolated Codex profile. It leaves your normal Codex window alone, but a Codex UI update may occasionally require selector maintenance.
+Codex plugins do not currently expose a public sidebar UI extension point. This project therefore starts the official Codex window with a localhost-only CDP bridge and injects the sidebar entry at runtime. Version 1.1 reuses your existing official profile instead of creating a second profile, so login state and conversation titles stay aligned. A Codex UI update may occasionally require selector maintenance.
+
+Use the desktop **Restore Official Codex** shortcut to stop the local helpers and restart Codex normally without injection. The project never patches `app.asar`.
 
 ## Similar projects
 

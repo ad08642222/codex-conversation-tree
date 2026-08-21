@@ -13,3 +13,4 @@ jobs:
       - run: node --check app/server.js
       - run: node --check app/inject.js
       - run: node --check app/embedded-launcher.js
+      - run: node --check app/restore-official.js

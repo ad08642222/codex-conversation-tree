@@ -79,12 +79,20 @@ if (-not $NoShortcut) {
   $shortcut = $shell.CreateShortcut($shortcutPath)
   $shortcut.TargetPath = Join-Path $InstallDir 'start-embedded-codex.cmd'
   $shortcut.WorkingDirectory = $InstallDir
-  $shortcut.Description = 'Open Codex with the embedded conversation tree'
+  $shortcut.Description = 'Open the official Codex window with the embedded conversation tree'
   $shortcut.Save()
+
+  $restoreShortcutPath = Join-Path $desktop 'Restore Official Codex.lnk'
+  $restoreShortcut = $shell.CreateShortcut($restoreShortcutPath)
+  $restoreShortcut.TargetPath = Join-Path $InstallDir 'restore-official-codex.cmd'
+  $restoreShortcut.WorkingDirectory = $InstallDir
+  $restoreShortcut.Description = 'Restart Codex normally without the conversation tree injection'
+  $restoreShortcut.Save()
 }
 
 Write-Host 'Installation complete.' -ForegroundColor Green
 Write-Host 'Use the desktop shortcut: Codex Conversation Tree'
+Write-Host 'Use Restore Official Codex to disable the injection and return to the normal launcher.'
 if (-not $NoLaunch) {
   Start-Process -FilePath 'wscript.exe' -ArgumentList (Join-Path $InstallDir 'embedded-launcher.vbs') -WindowStyle Hidden
 }
