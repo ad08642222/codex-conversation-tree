@@ -10,6 +10,19 @@ This is an unofficial, local-first community project. It reads real `forked_from
 
 [Download v1.1.0](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0) · [Chinese README](README.md) · [Security](SECURITY.md)
 
+## The problem it solves
+
+Codex's normal task list is convenient for recent work, but it does not provide a global visual map when one task grows into several branches. As the list grows, you have to remember relationships from titles and timestamps, search repeatedly to recover an older route, or rely on a separate viewer that may split login state and conversation data.
+
+| Before | With Codex Conversation Tree |
+|---|---|
+| Parent, child, and sibling tasks look like unrelated list items | Real `forked_from_id` relationships become a navigable tree |
+| Returning to an older branch requires searching and reopening tasks | Click a node to open the matching native Codex task |
+| A separate window or profile can create two unsynchronized task stores | The tree runs inside the same official window and profile |
+| A manual rename may leave an external viewer showing the old title | Names refresh in about five seconds; original-title search still works |
+| Remote dashboards create extra privacy questions | Parsing stays local and read-only; task data is never uploaded |
+| Runtime injection feels difficult to undo | **Restore Official Codex** returns to the normal launch path in one step |
+
 ## Install
 
 1. Download and extract `codex-conversation-tree-v1.1.0.zip` from the [latest release](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0).
@@ -36,13 +49,7 @@ Codex plugins do not currently expose a public sidebar UI extension point. This 
 
 Use the desktop **Restore Official Codex** shortcut to stop the local helpers and restart Codex normally without injection. The project never patches `app.asar`.
 
-## Similar projects
-
-- [Agentree](https://github.com/serban-cercelescu/Agentree): a broader standalone desktop viewer with message-level branching.
-- [Codex Conversation Map](https://github.com/Atman-Angle/Codex-Conversation-Map): semantic maps for Obsidian Canvas/tldraw rather than native task lineage.
-- [CodexMonitor ChatTree branch](https://github.com/Reekin/CodexMonitor/tree/feat/chattree-integration): a tree inside an external Codex monitor.
-
-See the [Chinese README](README.md) for the full comparison, architecture, security notes, usage, and troubleshooting.
+See the [Chinese README](README.md) for the full architecture, security notes, usage, and troubleshooting.
 
 ## Support and feedback
 

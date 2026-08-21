@@ -11,11 +11,32 @@
 
 > 非 OpenAI 官方项目。目前 Codex 插件没有公开的侧边栏 UI 扩展接口，所以项目通过本机 CDP 桥接实现侧边栏按钮和内嵌页面。
 
-![Codex Conversation Tree 界面](assets/screenshots/tree-overview.png)
+![安装前后的使用体验对比](assets/posters/v1.1.0-before-after.png)
 
 [English](README.en.md) · [下载 v1.1.0](https://github.com/ad08642222/codex-conversation-tree/releases/tag/v1.1.0) · [安装](#安装只需三步) · [安全与回退](#为什么启动时需要重启一次-codex)
 
-## 它能做什么
+## 没有会话树时，哪里不方便？
+
+Codex 原来的任务列表适合打开最近任务，但当任务越来越多、同一个问题产生多条分支时，列表无法直观回答“这个任务从哪里分出来”“还有哪些平行方案”“我现在位于哪条路线”。常见结果是：
+
+- **分支关系被标题列表隐藏。** 父任务、子任务和平行探索混在一起，只能凭名称和时间回忆。
+- **回到旧方案很费力。** 需要在长列表中反复搜索和试开，无法沿树直接回到某个节点。
+- **独立窗口方案会割裂体验。** 第二个窗口或独立配置可能带来重复登录、任务列表不同步和互相冲突。
+- **重命名后容易认不出来。** 外部视图如果只缓存自动标题，就不会跟随 Codex 中手动修改的名称。
+- **外部面板增加隐私顾虑。** 会话标题、路径和关系一旦交给远端服务，就超出了本机范围。
+
+## 安装后，它具体解决什么？
+
+| 原来的痛点 | Codex Conversation Tree 的处理方式 |
+|---|---|
+| 任务列表看不出父子关系 | 读取真实 `forked_from_id`，直接绘制父任务、子任务和平行分支 |
+| 找到分支后还要回列表重开 | 单击树节点，直接回到官方 Codex 中对应的原生任务 |
+| 第二个窗口产生两套登录和会话 | 复用同一个官方 Codex 窗口、配置、登录状态和任务列表 |
+| 手动重命名后树上仍是旧标题 | 约 5 秒内同步新名称，同时保留原始标题搜索 |
+| 担心会话数据被上传 | 本地只读解析，不上传、不修改会话数据库 |
+| 担心注入后无法恢复 | 提供 **Restore Official Codex**，一键停止辅助进程并恢复普通启动 |
+
+## 新版核心能力
 
 - 根据 Codex 本地会话中的 `forked_from_id` 读取真实分支关系，不靠标题猜测。
 - 复用官方 Codex 的原配置、登录状态和会话列表，不建立独立 `CodexProfile`。
@@ -26,6 +47,8 @@
 - 提供 **Restore Official Codex**，随时停止注入并恢复普通官方启动方式。
 - 只读运行，不修改任务内容；所有数据留在本机。
 - 修复拖动画布后鼠标“黏住”的问题，并处理窗口失焦、指针取消等边界情况。
+
+![Codex Conversation Tree 实际树状界面](assets/screenshots/tree-overview.png)
 
 ![左侧入口](assets/screenshots/sidebar-entry.png)
 
@@ -72,20 +95,6 @@ Codex 插件可以提供 Skills、MCP、Apps 等能力，但目前没有公开�
 需要暂时关闭注入时，使用桌面的 **Restore Official Codex**；它会停止本项目的两个本地辅助进程，并从 Windows 官方应用入口重新启动 Codex。项目不修改 `app.asar`，因此可以随时回退。
 
 从 1.0.0 升级时直接重新运行 `install.cmd` 即可。旧安装目录中的 `CodexProfile` 不再使用；如需彻底清理，可先卸载旧版再安装新版。
-
-## GitHub 上有没有类似项目？
-
-有，但定位不完全相同。本项目不宣称首创。
-
-| 项目 | 形式 | 与本项目的主要区别 |
-|---|---|---|
-| [Agentree](https://github.com/serban-cercelescu/Agentree) | 独立桌面应用 | 支持多种 coding agent、消息级分叉；不嵌入 Codex Desktop |
-| [Codex Conversation Map](https://github.com/Atman-Angle/Codex-Conversation-Map) | Skill + Obsidian Canvas/tldraw | 生成语义协作地图，不是 Codex 任务的真实父子谱系 |
-| [CodexMonitor 的 ChatTree 分支](https://github.com/Reekin/CodexMonitor/tree/feat/chattree-integration) | 外部监控工具中的树 | 集成在 CodexMonitor，而不是 Codex Desktop 侧边栏和对话区 |
-
-OpenAI Codex 仓库中也有[树状会话管理的功能建议](https://github.com/openai/codex/issues/12450)。Codex App Server 已公开 `parentThreadId`、`ancestorThreadId` 和 `thread/fork` 等关系能力；本项目当前从本地会话元数据读取 `forked_from_id`。
-
-本项目的重点是：**Windows Codex Desktop、真实任务谱系、左侧入口、主工作区内嵌、点击原生打开、完全本地只读**。
 
 ## 系统要求
 
