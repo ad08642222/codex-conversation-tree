@@ -12,10 +12,13 @@ This is an unofficial, local-first community project. It reads real `forked_from
 
 ## The problem it solves
 
-Codex's normal task list is convenient for recent work, but it does not provide a global visual map when one task grows into several branches. As the list grows, you have to remember relationships from titles and timestamps, search repeatedly to recover an older route, or rely on a separate viewer that may split login state and conversation data.
+Codex's normal task list is convenient for recent work, but repeated branches can leave you with nearly identical titles distinguished only by `1`, `2`, `3`, and so on. After several forks, those suffixes no longer tell you which experiment a task contains, where it came from, or which route you are currently following.
+
+![Repeated numeric suffixes versus a real conversation tree](assets/posters/conversation-tree-before-after-bright.png)
 
 | Before | With Codex Conversation Tree |
 |---|---|
+| Repeated branches become near-identical titles with numeric suffixes | Each task appears at its real position in the parent-child tree |
 | Parent, child, and sibling tasks look like unrelated list items | Real `forked_from_id` relationships become a navigable tree |
 | Returning to an older branch requires searching and reopening tasks | Click a node to open the matching native Codex task |
 | A separate window or profile can create two unsynchronized task stores | The tree runs inside the same official window and profile |
