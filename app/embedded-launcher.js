@@ -152,7 +152,12 @@ async function targets() {
     signal: AbortSignal.timeout(1200),
   });
   return (await response.json()).filter((target) => (
-    target.type === 'page' && (target.url?.startsWith('app://') || target.title === 'Codex')
+    target.type === 'page'
+    && (target.url?.startsWith('app://') || target.title === 'Codex')
+    // The avatar overlay is a separate always-on-top Electron window. It can
+    // appear before the real app shell and previously made startup stop early
+    // after injecting the wrong window.
+    && !target.url?.includes('initialRoute=%2Favatar-overlay')
   ));
 }
 
@@ -235,13 +240,13 @@ async function main() {
     launchMainProfileCodex();
   }
 
-  const injected = new Set();
+  const injected = new Map();
   for (let attempt = 0; attempt < 160; attempt += 1) {
     try {
       for (const target of await targets()) {
         if (!injected.has(target.id)) {
           await inject(target);
-          injected.add(target.id);
+          injected.set(target.id, Date.now());
         }
       }
       if (injected.size) break;
@@ -260,10 +265,15 @@ async function main() {
       } else {
         emptyPolls = 0;
       }
+      const liveIds = new Set(liveTargets.map((target) => target.id));
+      for (const id of injected.keys()) {
+        if (!liveIds.has(id)) injected.delete(id);
+      }
       for (const target of liveTargets) {
-        if (!injected.has(target.id)) {
+        const lastInjectedAt = injected.get(target.id) || 0;
+        if (Date.now() - lastInjectedAt >= 5000) {
           await inject(target);
-          injected.add(target.id);
+          injected.set(target.id, Date.now());
         }
         await loadFrames(target);
       }

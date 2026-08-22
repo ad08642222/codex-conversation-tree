@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Ignore the separate avatar-overlay Electron window when selecting the Codex app shell for injection.
+- Revalidate the live app-shell target every five seconds so the sidebar entry recovers after target or document changes.
+
 ## 1.1.1
 
 - Reload the embedded tree after Codex recreates its Chromium frame, preventing a blank black page after main-workspace remounts.
